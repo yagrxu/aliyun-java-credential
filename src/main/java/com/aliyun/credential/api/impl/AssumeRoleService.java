@@ -25,16 +25,22 @@ import com.google.gson.JsonParser;
 public class AssumeRoleService {
 
 	protected static AccessKeyEntity assumeServiceSts(Config config) throws CredentialException {
+
 		AccessKeyEntity stsCredential = config.getTempAccessKey();
 		if (stsCredential != null && !stsCredential.willSoonExpire()) {
 			return stsCredential;
-		} else {
-			return assumeEcsRole(config.getRamRoleName());
 		}
+		return assumeEcsRole(config.getRamRoleName());
 
 	}
 
 	protected static AccessKeyEntity assumRoleByAccessKey(Config config) throws CredentialException {
+
+		AccessKeyEntity tempCredential = config.getTempAccessKey();
+		if (tempCredential != null && !tempCredential.willSoonExpire()) {
+			return tempCredential;
+		}
+
 		AlibabaCloudCredentials credential = config.getLonglivedAccessKey();
 		long currentTime = System.currentTimeMillis();
 		STSAssumeRoleSessionCredentialsProvider stsProvider = new STSAssumeRoleSessionCredentialsProvider(
@@ -51,6 +57,7 @@ public class AssumeRoleService {
 	}
 
 	private static AccessKeyEntity assumeEcsRole(String roleName) throws CredentialException {
+
 		URL url = null;
 		StsObject temp = null;
 		try {
