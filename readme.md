@@ -1,5 +1,5 @@
 # Aliyun Java Credential
 
-This jar is to make aliyun credential easier in Java code.
+[![Build Status](https://travis-ci.com/yagrxu/aliyun-java-credential.svg?branch=master)](https://travis-ci.com/yagrxu/aliyun-java-credential)
 
-https://travis-ci.com/yagrxu/aliyun-java-credential.svg?branch=master
+This jar is to make aliyun credential easier in Java code.
